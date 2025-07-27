@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Flashcards & Exams</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Study Flashcards & Exams</h1>
+            <p>Master concepts through spaced repetition and test your knowledge</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('flashcards')">🔄 Flashcards</button>
+            <button class="tab-btn" onclick="switchTab('exams')">📝 Exams</button>
+        </div>
+
+        <!-- Flashcards Tab -->
+        <div id="flashcards" class="tab-content active">
+            <div class="flashcard-section">
+                <h3>Create Flashcards</h3>
+                <div class="flashcard-form">
+                    <div>
+                        <label>Question/Front:</label>
+                        <textarea id="cardFront" placeholder="Enter your question or term..."></textarea>
+                    </div>
+                    <div>
+                        <label>Answer/Back:</label>
+                        <textarea id="cardBack" placeholder="Enter the answer or definition..."></textarea>
+                    </div>
+                </div>
+                <button class="btn" onclick="addFlashcard()">➕ Add Flashcard</button>
+            </div>
+
+            <div class="stats">
+                <h3>Study Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalCards">0</div>
+                        <div class="stat-label">Total Cards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="studiedToday">0</div>
+                        <div class="stat-label">Studied Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="dueCards">0</div>
+                        <div class="stat-label">Due for Review</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="masteredCards">0</div>
+                        <div class="stat-label">Mastered</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flashcard-section">
+                <h3>Study Session</h3>
+                <div id="studyArea">
+                    <div id="noCards" style="text-align: center; padding: 40px; color: #666;">
+                        No cards available for study. Create some flashcards first!
+                    </div>
+                </div>
+            </div>
+
+            <div class="flashcard-section">
+                <h3>Manage Cards</h3>
+                <div class="card-list" id="cardList">
+                    <div style="text-align: center; color: #666;">No cards created yet.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exams Tab -->
+        <div id="exams" class="tab-content">
+            <div class="exam-container">
+                <div class="exam-setup" id="examSetup">
+                    <h3>Create Practice Exam</h3>
+                    <p style="margin-bottom: 20px; color: #666;">Generate a practice exam from your flashcards to test your knowledge.</p>
+                    
+                    <div class="exam-form">
+                        <div class="input-group">
+                            <label>Number of Questions:</label>
+                            <select id="numQuestions">
+                                <option value="5">5 Questions</option>
+                                <option value="10">10 Questions</option>
+                                <option value="15">15 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="all">All Available Cards</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Time Limit (minutes):</label>
+                            <select id="timeLimit">
+                                <option value="0">No Time Limit</option>
+                                <option value="5">5 Minutes</option>
+                                <option value="10">10 Minutes</option>
+                                <option value="15">15 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Question Type:</label>
+                            <select id="questionType">
+                                <option value="multiple-choice">Multiple Choice</option>
+                                <option value="true-false">True/False</option>
+                                <option value="mixed">Mixed</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="startExam()" id="startExamBtn">🚀 Start Exam</button>
+                    <div id="noFlashcardsWarning" style="display: none; color: #e74c3c; margin-top: 15px; text-align: center;">
+                        ⚠️ You need at least 3 flashcards to create an exam. Go to the Flashcards tab to create some first.
+                    </div>
+                </div>
+
+                <div id="examArea" style="display: none;">
+                    <div class="exam-controls">
+                        <div class="exam-timer" id="examTimer">∞</div>
+                        <div class="exam-progress">
+                            <div>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 10%;"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" onclick="endExam()">End Exam</button>
+                    </div>
+
+                    <div id="examQuestions"></div>
+
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                        <button class="btn" onclick="nextQuestion()" id="nextBtn">Next →</button>
+                        <button class="btn btn-success" onclick="submitExam()" id="submitBtn" style="display: none;">Submit Exam</button>
+                    </div>
+                </div>
+
+                <div id="examResults" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
